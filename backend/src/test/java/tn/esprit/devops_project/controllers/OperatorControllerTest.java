@@ -15,6 +15,7 @@ import tn.esprit.devops_project.services.Iservices.IOperatorService;
 
 import java.util.Collections;
 import java.util.List;
+import static org.mockito.Mockito.any;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -54,8 +55,11 @@ class OperatorControllerTest {
     @Test
     void testAddOperator() throws Exception {
         Operator operator = new Operator();
-        when(operatorService.addOperator(operator)).thenReturn(operator);
-
+        operator.setIdOperateur(1L);
+        operator.setFname("John");
+        operator.setLname("Doe");
+        operator.setPassword("examplePassword");
+        when(operatorService.addOperator(any(Operator.class))).thenReturn(operator);
         mockMvc.perform(post("/operator")
                         .content(new ObjectMapper().writeValueAsString(operator))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -65,21 +69,29 @@ class OperatorControllerTest {
 
     @Test
     void testRemoveOperator() throws Exception {
+        // Mocking the deletion process
         doNothing().when(operatorService).deleteOperator(1L);
 
-        mockMvc.perform(delete("/operator/1"))
+        // Testing the DELETE request
+        mockMvc.perform(delete("/operatot/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
     void testModifyOperator() throws Exception {
         Operator operator = new Operator();
-        when(operatorService.updateOperator(operator)).thenReturn(operator);
+        operator.setIdOperateur(1L);
+        operator.setFname("test");
+        operator.setLname("test");
+        operator.setPassword("test");
+
+        when(operatorService.updateOperator(any(Operator.class))).thenReturn(operator);
 
         mockMvc.perform(put("/operator")
                         .content(new ObjectMapper().writeValueAsString(operator))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(new ObjectMapper().writeValueAsString(operator)));
     }
 }

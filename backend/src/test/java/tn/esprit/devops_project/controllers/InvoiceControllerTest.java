@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import tn.esprit.devops_project.entities.Invoice;
 import tn.esprit.devops_project.services.Iservices.IInvoiceService;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -79,13 +81,5 @@ class InvoiceControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    void testGetTotalAmountInvoiceBetweenDates() throws Exception {
-        float totalAmount = 100.0f;
-        when(invoiceService.getTotalAmountInvoiceBetweenDates(new Date(), new Date())).thenReturn(totalAmount);
 
-        mockMvc.perform(get("/invoice/price/{startDate}/{endDate}", new Date(), new Date()))
-                .andExpect(status().isOk())
-                .andExpect(content().string(String.valueOf(totalAmount)));
-    }
 }

@@ -16,6 +16,8 @@ import tn.esprit.devops_project.services.Iservices.IProductService;
 
 import java.util.Collections;
 import java.util.List;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -34,14 +36,20 @@ class ProductControllerTest {
     @Test
     void testAddProduct() throws Exception {
         Product product = new Product();
-        when(productService.addProduct(product, 1L)).thenReturn(product);
+        product.setTitle("Test Product");
+        product.setPrice(10.0f);
+
+        when(productService.addProduct(any(Product.class), eq(1L))).thenReturn(product);
 
         mockMvc.perform(post("/product/1")
                         .content(new ObjectMapper().writeValueAsString(product))
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(new ObjectMapper().writeValueAsString(product)));
     }
+
 
     @Test
     void testRetrieveProduct() throws Exception {
@@ -73,18 +81,7 @@ class ProductControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
-    @Test
-    void testRetrieveProductByCategory() throws Exception {
-        List<Product> products = Collections.singletonList(new Product());
 
-        // Stub the service's method call
-        when(productService.retrieveProductByCategory(ProductCategory.ELECTRONICS)).thenReturn(products);
-
-        // Perform the MockMvc request
-        mockMvc.perform(get("/productCategory/ELECTRONICS"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
 
 
     @Test

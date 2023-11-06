@@ -1,5 +1,6 @@
 package tn.esprit.devops_project.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +20,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 @WebMvcTest(SupplierController.class)
 public class SupplierControllerTest {
 
@@ -62,9 +64,11 @@ public class SupplierControllerTest {
     @Test
     public void testAddSupplier() throws Exception {
         Supplier supplier = new Supplier();
-        when(supplierService.addSupplier(supplier)).thenReturn(supplier);
+        when(supplierService.addSupplier(any(Supplier.class))).thenReturn(supplier);
 
-        mockMvc.perform(post("/supplier"))
+        mockMvc.perform(post("/supplier")
+                        .content(new ObjectMapper().writeValueAsString(supplier))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -80,9 +84,11 @@ public class SupplierControllerTest {
     @Test
     public void testModifySupplier() throws Exception {
         Supplier supplier = new Supplier();
-        when(supplierService.updateSupplier(supplier)).thenReturn(supplier);
+        when(supplierService.updateSupplier(any(Supplier.class))).thenReturn(supplier);
 
-        mockMvc.perform(put("/supplier"))
+        mockMvc.perform(put("/supplier")
+                        .content(new ObjectMapper().writeValueAsString(supplier))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
