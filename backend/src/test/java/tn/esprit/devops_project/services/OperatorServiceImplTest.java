@@ -29,9 +29,7 @@ class OperatorServiceImplTest {
     void testRetrieveAllOperators() {
         Operator operator = new Operator();
         when(operatorRepository.findAll()).thenReturn(Collections.singletonList(operator));
-
         List<Operator> operators = operatorService.retrieveAllOperators();
-
         assertEquals(1, operators.size());
         assertEquals(operator, operators.get(0));
     }
@@ -40,9 +38,7 @@ class OperatorServiceImplTest {
     void testAddOperator() {
         Operator operator = new Operator();
         when(operatorRepository.save(operator)).thenReturn(operator);
-
         Operator addedOperator = operatorService.addOperator(operator);
-
         assertEquals(operator, addedOperator);
     }
 
@@ -50,7 +46,6 @@ class OperatorServiceImplTest {
     void testDeleteOperator() {
         Long operatorId = 1L;
         operatorService.deleteOperator(operatorId);
-
         verify(operatorRepository).deleteById(operatorId);
     }
 
@@ -58,9 +53,7 @@ class OperatorServiceImplTest {
     void testUpdateOperator() {
         Operator operator = new Operator();
         when(operatorRepository.save(operator)).thenReturn(operator);
-
         Operator updatedOperator = operatorService.updateOperator(operator);
-
         assertEquals(operator, updatedOperator);
     }
 
@@ -69,9 +62,7 @@ class OperatorServiceImplTest {
         Long operatorId = 1L;
         Operator operator = new Operator();
         when(operatorRepository.findById(operatorId)).thenReturn(Optional.of(operator));
-
         Operator retrievedOperator = operatorService.retrieveOperator(operatorId);
-
         assertEquals(operator, retrievedOperator);
     }
 
@@ -79,7 +70,6 @@ class OperatorServiceImplTest {
     void testRetrieveOperator_NotFound() {
         Long operatorId = 1L;
         when(operatorRepository.findById(operatorId)).thenReturn(Optional.empty());
-
         assertThrows(NullPointerException.class, () -> operatorService.retrieveOperator(operatorId));
     }
 }

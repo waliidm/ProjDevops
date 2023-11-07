@@ -30,38 +30,29 @@ class SupplierServiceImplTest {
     void testRetrieveAllSuppliers() {
         List<Supplier> suppliers = Collections.singletonList(new Supplier());
         when(supplierRepository.findAll()).thenReturn(suppliers);
-
         List<Supplier> retrievedSuppliers = supplierService.retrieveAllSuppliers();
-
         assertEquals(suppliers, retrievedSuppliers);
     }
 
     @Test
     void testAddSupplier() {
         Supplier supplier = new Supplier();
-
         when(supplierRepository.save(supplier)).thenReturn(supplier);
-
         Supplier addedSupplier = supplierService.addSupplier(supplier);
-
         assertEquals(supplier, addedSupplier);
     }
 
     @Test
     void testUpdateSupplier() {
         Supplier supplier = new Supplier();
-
         when(supplierRepository.save(supplier)).thenReturn(supplier);
-
         Supplier updatedSupplier = supplierService.updateSupplier(supplier);
-
         assertEquals(supplier, updatedSupplier);
     }
 
     @Test
     void testDeleteSupplier() {
         supplierService.deleteSupplier(1L);
-
         verify(supplierRepository).deleteById(1L);
     }
 
@@ -69,16 +60,13 @@ class SupplierServiceImplTest {
     void testRetrieveSupplier() {
         Supplier supplier = new Supplier();
         when(supplierRepository.findById(1L)).thenReturn(Optional.of(supplier));
-
         Supplier retrievedSupplier = supplierService.retrieveSupplier(1L);
-
         assertEquals(supplier, retrievedSupplier);
     }
 
     @Test
     void testRetrieveSupplier_NotFound() {
         when(supplierRepository.findById(1L)).thenReturn(Optional.empty());
-
         assertThrows(IllegalArgumentException.class, () -> supplierService.retrieveSupplier(1L));
     }
 }

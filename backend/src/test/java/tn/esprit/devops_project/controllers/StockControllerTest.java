@@ -27,24 +27,21 @@ public class StockControllerTest {
 
     @BeforeEach
     public void setUp() {
-        // Mock data or setup before each test if needed
     }
 
     @Test
     public void testAddStock() {
-        Stock stock = new Stock(/* Add necessary parameters */);
+        Stock stock = new Stock();
         when(stockService.addStock(stock)).thenReturn(stock);
-
         Stock result = stockController.addStock(stock);
         assertEquals(stock, result);
     }
 
     @Test
     public void testRetrieveStock() {
-        Long id = 1L; // Adjust the ID as needed
-        Stock stock = new Stock(/* Add necessary parameters */);
+        Long id = 1L;
+        Stock stock = new Stock();
         when(stockService.retrieveStock(id)).thenReturn(stock);
-
         Stock result = stockController.retrieveStock(id);
         assertEquals(stock, result);
     }
@@ -52,10 +49,7 @@ public class StockControllerTest {
     @Test
     public void testRetrieveAllStock() {
         List<Stock> stockList = new ArrayList<>();
-        // Add some stocks to the list
-
         when(stockService.retrieveAllStock()).thenReturn(stockList);
-
         List<Stock> result = stockController.retrieveAllStock();
         assertEquals(stockList, result);
     }

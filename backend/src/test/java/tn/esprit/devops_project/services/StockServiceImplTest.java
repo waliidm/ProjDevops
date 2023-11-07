@@ -28,11 +28,8 @@ class StockServiceImplTest {
     @Test
     void testAddStock() {
         Stock stock = new Stock();
-
         when(stockRepository.save(stock)).thenReturn(stock);
-
         Stock addedStock = stockService.addStock(stock);
-
         assertEquals(stock, addedStock);
     }
 
@@ -40,16 +37,13 @@ class StockServiceImplTest {
     void testRetrieveStock() {
         Stock stock = new Stock();
         when(stockRepository.findById(1L)).thenReturn(Optional.of(stock));
-
         Stock retrievedStock = stockService.retrieveStock(1L);
-
         assertEquals(stock, retrievedStock);
     }
 
     @Test
     void testRetrieveStock_NotFound() {
         when(stockRepository.findById(1L)).thenReturn(Optional.empty());
-
         assertThrows(NullPointerException.class, () -> stockService.retrieveStock(1L));
     }
 
@@ -57,9 +51,7 @@ class StockServiceImplTest {
     void testRetrieveAllStock() {
         List<Stock> stockList = Collections.singletonList(new Stock());
         when(stockRepository.findAll()).thenReturn(stockList);
-
         List<Stock> retrievedStocks = stockService.retrieveAllStock();
-
         assertEquals(stockList.size(), retrievedStocks.size());
     }
 }

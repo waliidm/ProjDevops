@@ -43,59 +43,39 @@ public class InvoiceServiceImplTest {
 
     @Test
     public void testRetrieveAllInvoices() {
-        // Given
         List<Invoice> testInvoices = Arrays.asList(new Invoice(), new Invoice());
         when(invoiceRepository.findAll()).thenReturn(testInvoices);
-
-        // When
         List<Invoice> retrievedInvoices = invoiceService.retrieveAllInvoices();
-
-        // Then
         assertNotNull(retrievedInvoices);
         assertEquals(2, retrievedInvoices.size());
     }
 
     @Test
     public void testCancelInvoice() {
-        // Given
         Long invoiceId = 1L;
         Invoice mockInvoice = new Invoice();
         when(invoiceRepository.findById(invoiceId)).thenReturn(Optional.of(mockInvoice));
-
-        // When
         invoiceService.cancelInvoice(invoiceId);
-
-        // Then
         verify(invoiceRepository).save(mockInvoice);
     }
 
     @Test
     public void testRetrieveInvoice() {
-        // Given
         Long invoiceId = 1L;
         Invoice mockInvoice = new Invoice();
         when(invoiceRepository.findById(invoiceId)).thenReturn(Optional.of(mockInvoice));
-
-        // When
         Invoice retrievedInvoice = invoiceService.retrieveInvoice(invoiceId);
-
-        // Then
         assertNotNull(retrievedInvoice);
         assertEquals(mockInvoice, retrievedInvoice);
     }
 
     @Test
     public void testGetInvoicesBySupplier() {
-        // Given
         Long supplierId = 1L;
         Supplier mockSupplier = new Supplier();
         mockSupplier.setInvoices(new HashSet<>());
         when(supplierRepository.findById(supplierId)).thenReturn(Optional.of(mockSupplier));
-
-        // When
         List<Invoice> retrievedInvoices = invoiceService.getInvoicesBySupplier(supplierId);
-
-        // Then
         assertNotNull(retrievedInvoices);
         assertEquals(0, retrievedInvoices.size());
     }

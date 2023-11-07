@@ -39,7 +39,6 @@ class InvoiceControllerTest {
     void testGetInvoices() throws Exception {
         List<Invoice> invoices = Collections.singletonList(new Invoice());
         when(invoiceService.retrieveAllInvoices()).thenReturn(invoices);
-
         mockMvc.perform(get("/invoice"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -58,7 +57,6 @@ class InvoiceControllerTest {
     @Test
     void testCancelInvoice() throws Exception {
         doNothing().when(invoiceService).cancelInvoice(1L);
-
         mockMvc.perform(put("/invoice/1"))
                 .andExpect(status().isOk());
     }
@@ -67,7 +65,6 @@ class InvoiceControllerTest {
     void testGetInvoicesBySupplier() throws Exception {
         List<Invoice> invoices = Collections.singletonList(new Invoice());
         when(invoiceService.getInvoicesBySupplier(1L)).thenReturn(invoices);
-
         mockMvc.perform(get("/invoice/supplier/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -76,7 +73,6 @@ class InvoiceControllerTest {
     @Test
     void testAssignOperatorToInvoice() throws Exception {
         doNothing().when(invoiceService).assignOperatorToInvoice(1L, 1L);
-
         mockMvc.perform(put("/invoice/operator/1/1"))
                 .andExpect(status().isOk());
     }

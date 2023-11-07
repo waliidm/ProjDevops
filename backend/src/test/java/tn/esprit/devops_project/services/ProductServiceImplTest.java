@@ -36,12 +36,9 @@ class ProductServiceImplTest {
         Stock stock = new Stock();
         Product product = new Product();
         product.setStock(stock);
-
         when(stockRepository.findById(1L)).thenReturn(Optional.of(stock));
         when(productRepository.save(product)).thenReturn(product);
-
         Product addedProduct = productService.addProduct(product, 1L);
-
         assertEquals(product, addedProduct);
     }
 
@@ -49,16 +46,13 @@ class ProductServiceImplTest {
     void testRetrieveProduct() {
         Product product = new Product();
         when(productRepository.findById(1L)).thenReturn(Optional.of(product));
-
         Product retrievedProduct = productService.retrieveProduct(1L);
-
         assertEquals(product, retrievedProduct);
     }
 
     @Test
     void testRetrieveProduct_NotFound() {
         when(productRepository.findById(1L)).thenReturn(Optional.empty());
-
         assertThrows(NullPointerException.class, () -> productService.retrieveProduct(1L));
     }
 
@@ -66,9 +60,7 @@ class ProductServiceImplTest {
     void testRetreiveAllProduct() {
         List<Product> productList = Collections.singletonList(new Product());
         when(productRepository.findAll()).thenReturn(productList);
-
         List<Product> retrievedProducts = productService.retreiveAllProduct();
-
         assertEquals(productList.size(), retrievedProducts.size());
     }
 
@@ -76,11 +68,8 @@ class ProductServiceImplTest {
     void testRetrieveProductByCategory() {
         ProductCategory category = ProductCategory.ELECTRONICS;
         List<Product> productList = Collections.singletonList(new Product());
-
         when(productRepository.findByCategory(category)).thenReturn(productList);
-
         List<Product> retrievedProducts = productService.retrieveProductByCategory(category);
-
         assertEquals(productList.size(), retrievedProducts.size());
     }
 
@@ -94,9 +83,7 @@ class ProductServiceImplTest {
     void testRetreiveProductStock() {
         List<Product> productList = Collections.singletonList(new Product());
         when(productRepository.findByStockIdStock(1L)).thenReturn(productList);
-
         List<Product> retrievedProducts = productService.retreiveProductStock(1L);
-
         assertEquals(productList.size(), retrievedProducts.size());
     }
 }

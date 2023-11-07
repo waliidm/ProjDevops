@@ -38,9 +38,7 @@ class ProductControllerTest {
         Product product = new Product();
         product.setTitle("Test Product");
         product.setPrice(10.0f);
-
         when(productService.addProduct(any(Product.class), eq(1L))).thenReturn(product);
-
         mockMvc.perform(post("/product/1")
                         .content(new ObjectMapper().writeValueAsString(product))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -55,7 +53,6 @@ class ProductControllerTest {
     void testRetrieveProduct() throws Exception {
         Product product = new Product();
         when(productService.retrieveProduct(1L)).thenReturn(product);
-
         mockMvc.perform(get("/product/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -75,7 +72,6 @@ class ProductControllerTest {
     void testRetrieveProductStock() throws Exception {
         List<Product> products = Collections.singletonList(new Product());
         when(productService.retreiveProductStock(1L)).thenReturn(products);
-
         mockMvc.perform(get("/product/stock/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));

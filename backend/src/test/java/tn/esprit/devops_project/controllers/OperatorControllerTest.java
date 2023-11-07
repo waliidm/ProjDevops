@@ -69,10 +69,7 @@ class OperatorControllerTest {
 
     @Test
     void testRemoveOperator() throws Exception {
-        // Mocking the deletion process
         doNothing().when(operatorService).deleteOperator(1L);
-
-        // Testing the DELETE request
         mockMvc.perform(delete("/operatot/1"))
                 .andExpect(status().isOk());
     }
@@ -84,9 +81,7 @@ class OperatorControllerTest {
         operator.setFname("test");
         operator.setLname("test");
         operator.setPassword("test");
-
         when(operatorService.updateOperator(any(Operator.class))).thenReturn(operator);
-
         mockMvc.perform(put("/operator")
                         .content(new ObjectMapper().writeValueAsString(operator))
                         .contentType(MediaType.APPLICATION_JSON))

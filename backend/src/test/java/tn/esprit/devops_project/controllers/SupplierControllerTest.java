@@ -76,7 +76,6 @@ public class SupplierControllerTest {
     @Test
     public void testRemoveSupplier() throws Exception {
         doNothing().when(supplierService).deleteSupplier(1L);
-
         mockMvc.perform(delete("/supplier/1"))
                 .andExpect(status().isOk());
     }
@@ -85,7 +84,6 @@ public class SupplierControllerTest {
     public void testModifySupplier() throws Exception {
         Supplier supplier = new Supplier();
         when(supplierService.updateSupplier(any(Supplier.class))).thenReturn(supplier);
-
         mockMvc.perform(put("/supplier")
                         .content(new ObjectMapper().writeValueAsString(supplier))
                         .contentType(MediaType.APPLICATION_JSON))
